@@ -91,6 +91,6 @@ Please open an issue or submit a pull request.
 **Haardik Mago**  
 - GitHub: [Haardik11](https://github.com/Haardik11)  
 - LinkedIn: [*(HAARDIK MAGO)* ](https://www.linkedin.com/in/haardik-mago-637972157?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B6A3VFxy%2FTVK8bJf4%2BPNeLw%3D%3D) 
-- Email: Haardikmago#@gmail.com 
+- Email: Haardikmago@gmail.com 
 
 
