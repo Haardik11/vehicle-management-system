@@ -1,0 +1,90 @@
+<div class="p-6">
+  <h2 class="text-2xl font-bold mb-4">Available Vehicles</h2>
+  <div *ngIf="error" class="mb-4 text-red-600">{{ error }}</div>
+
+  <!-- Search/Filter -->
+  <div class="flex flex-wrap gap-4 mb-4">
+    <div>
+      <label class="block mb-1">Type</label>
+      <select [(ngModel)]="searchType" (change)="applyFilters()" class="border px-2 py-1 rounded">
+        <option value="">All</option>
+        <option value="Sedan">Sedan</option>
+        <option value="SUV">SUV</option>
+        <option value="Truck">Truck</option>
+        <option value="Van">Van</option>
+      </select>
+    </div>
+    <div>
+      <label class="block mb-1">Min Capacity</label>
+      <input type="number" [(ngModel)]="searchCapacity" (input)="applyFilters()" class="border px-2 py-1 rounded" min="1" />
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="mb-4">Loading vehicles...</div>
+
+  <table *ngIf="!loading && filteredVehicles.length" class="min-w-full bg-white border rounded shadow">
+    <thead>
+      <tr>
+        <th class="px-4 py-2 border">Make</th>
+        <th class="px-4 py-2 border">Model</th>
+        <th class="px-4 py-2 border">Year</th>
+        <th class="px-4 py-2 border">Type</th>
+        <th class="px-4 py-2 border">Capacity</th>
+        <th class="px-4 py-2 border">Status</th>
+        <th class="px-4 py-2 border">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let v of filteredVehicles">
+        <td class="px-4 py-2 border">{{ v.make }}</td>
+        <td class="px-4 py-2 border">{{ v.model }}</td>
+        <td class="px-4 py-2 border">{{ v.year }}</td>
+        <td class="px-4 py-2 border">{{ v.type }}</td>
+        <td class="px-4 py-2 border">{{ v.capacity }}</td>
+        <td class="px-4 py-2 border">{{ v.status }}</td>
+        <td class="px-4 py-2 border">
+          <button (click)="openBookingForm(v)" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">Book</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!loading && !filteredVehicles.length" class="mt-4">No vehicles found.</div>
+
+  <!-- Booking Form Modal -->
+  <div *ngIf="showBookingForm" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+    <div class="bg-white p-6 rounded shadow-md w-full max-w-md relative">
+      <h3 class="text-xl font-bold mb-4">Book Vehicle: {{ selectedVehicle?.make }} {{ selectedVehicle?.model }}</h3>
+      <form (ngSubmit)="submitBooking()">
+        <div class="mb-2">
+          <label class="block mb-1">Start Date</label>
+          <input type="date" [(ngModel)]="bookingForm.startDate" name="startDate" class="w-full border px-2 py-1 rounded" required />
+        </div>
+        <div class="mb-2">
+          <label class="block mb-1">End Date</label>
+          <input type="date" [(ngModel)]="bookingForm.endDate" name="endDate" class="w-full border px-2 py-1 rounded" required />
+        </div>
+        <div class="mb-2">
+          <label class="block mb-1">Pickup Location</label>
+          <input type="text" [(ngModel)]="bookingForm.pickupLocation" name="pickupLocation" class="w-full border px-2 py-1 rounded" required />
+        </div>
+        <div class="mb-2">
+          <label class="block mb-1">Drop-off Location</label>
+          <input type="text" [(ngModel)]="bookingForm.dropoffLocation" name="dropoffLocation" class="w-full border px-2 py-1 rounded" required />
+        </div>
+        <div class="mb-4">
+          <label class="block mb-1">Purpose</label>
+          <input type="text" [(ngModel)]="bookingForm.purpose" name="purpose" class="w-full border px-2 py-1 rounded" />
+        </div>
+        <div *ngIf="bookingError" class="mb-2 text-red-600">{{ bookingError }}</div>
+        <div *ngIf="bookingSuccess" class="mb-2 text-green-600">{{ bookingSuccess }}</div>
+        <div class="flex justify-end">
+          <button type="button" (click)="closeBookingForm()" class="mr-2 px-4 py-2 rounded bg-gray-300">Cancel</button>
+          <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white" [disabled]="bookingLoading">
+            <span *ngIf="!bookingLoading">Book</span>
+            <span *ngIf="bookingLoading">Booking...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

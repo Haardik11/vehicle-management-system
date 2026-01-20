@@ -1,0 +1,31 @@
+<div class="p-6">
+  <h2 class="text-2xl font-bold mb-4">My Bookings</h2>
+  <div *ngIf="error" class="mb-4 text-red-600">{{ error }}</div>
+  <div *ngIf="loading" class="mb-4">Loading bookings...</div>
+
+  <table *ngIf="!loading && bookings.length" class="min-w-full bg-white border rounded shadow">
+    <thead>
+      <tr>
+        <th class="px-4 py-2 border">Vehicle</th>
+        <th class="px-4 py-2 border">Start Date</th>
+        <th class="px-4 py-2 border">End Date</th>
+        <th class="px-4 py-2 border">Pickup</th>
+        <th class="px-4 py-2 border">Drop-off</th>
+        <th class="px-4 py-2 border">Purpose</th>
+        <th class="px-4 py-2 border">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let b of bookings">
+        <td class="px-4 py-2 border">{{ b.vehicle?.make || '' }} {{ b.vehicle?.model || '' }}</td>
+        <td class="px-4 py-2 border">{{ b.startDate | date:'mediumDate' }}</td>
+        <td class="px-4 py-2 border">{{ b.endDate | date:'mediumDate' }}</td>
+        <td class="px-4 py-2 border">{{ b.pickupLocation }}</td>
+        <td class="px-4 py-2 border">{{ b.dropoffLocation }}</td>
+        <td class="px-4 py-2 border">{{ b.purpose }}</td>
+        <td class="px-4 py-2 border">{{ b.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!loading && !bookings.length" class="mt-4">No bookings found.</div>
+</div>

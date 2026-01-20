@@ -1,0 +1,270 @@
+<div class="p-6 max-w-7xl mx-auto">
+  <!-- Dashboard Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+    <p class="text-gray-600">Manage vehicles, bookings, and users</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <p-card class="shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-blue-500">
+      <div class="flex items-center">
+        <i class="pi pi-car text-blue-500 text-2xl mr-4"></i>
+        <div>
+          <p class="text-gray-500 font-medium">Total Vehicles</p>
+          <p class="text-3xl font-bold text-gray-800">{{ stats.vehicles }}</p>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-green-500">
+      <div class="flex items-center">
+        <i class="pi pi-calendar text-green-500 text-2xl mr-4"></i>
+        <div>
+          <p class="text-gray-500 font-medium">Total Bookings</p>
+          <p class="text-3xl font-bold text-gray-800">{{ stats.bookings }}</p>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-purple-500">
+      <div class="flex items-center">
+        <i class="pi pi-users text-purple-500 text-2xl mr-4"></i>
+        <div>
+          <p class="text-gray-500 font-medium">Total Users</p>
+          <p class="text-3xl font-bold text-gray-800">{{ stats.users }}</p>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Vehicle Management Section -->
+  <p-card class="shadow-md mb-6">
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800">Vehicle Management</h2>
+        <p class="text-gray-500">Add, edit or remove vehicles from the system</p>
+      </div>
+      <button
+        pButton
+        type="button"
+        label="Add Vehicle"
+        icon="pi pi-plus"
+        class="p-button-success p-button-rounded"
+        (click)="openAddForm()"
+      ></button>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="flex justify-center items-center py-12">
+      <div class="flex flex-col items-center">
+        <p-progressSpinner></p-progressSpinner>
+        <p class="mt-4 text-gray-600">Loading vehicles...</p>
+      </div>
+    </div>
+
+    <!-- Vehicle Table -->
+    <p-table
+      [value]="vehicles"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[5,10,25]"
+      [responsiveLayout]="'stack'"
+      [breakpoint]="'960px'"
+      styleClass="p-datatable-striped p-datatable-gridlines"
+      *ngIf="vehicles.length && !loading"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="make">Make <p-sortIcon field="make"></p-sortIcon></th>
+          <th pSortableColumn="model">Model <p-sortIcon field="model"></p-sortIcon></th>
+          <th pSortableColumn="year">Year <p-sortIcon field="year"></p-sortIcon></th>
+          <th>Chassis #</th>
+          <th>Type</th>
+          <th>Capacity</th>
+          <th>Status</th>
+          <th style="width: 120px">Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-v>
+        <tr>
+          <td>{{ v.make }}</td>
+          <td>{{ v.model }}</td>
+          <td>{{ v.year }}</td>
+          <td class="font-mono">{{ v.chassis_number }}</td>
+          <td><span class="p-tag">{{ v.vehicle_type }}</span></td>
+          <td>{{ v.capacity }}</td>
+          <td>
+            <span [ngClass]="{
+              'p-tag p-tag-success': v.status === 'Available',
+              'p-tag p-tag-warning': v.status === 'In Service',
+              'p-tag p-tag-danger': v.status === 'Booked'
+            }">
+              {{ v.status }}
+            </span>
+          </td>
+          <td>
+            <div class="flex space-x-2">
+              <button
+                pButton
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-text p-button-warning"
+                pTooltip="Edit"
+                tooltipPosition="top"
+                (click)="openEditForm(v)"
+              ></button>
+              <button
+                pButton
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-text p-button-danger"
+                pTooltip="Delete"
+                tooltipPosition="top"
+                (click)="deleteVehicle(v)"
+              ></button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8" class="text-center py-6 text-gray-500">
+            No vehicles found. Click "Add Vehicle" to create one.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <!-- Empty State -->
+    <div *ngIf="!vehicles.length && !loading" class="text-center py-12">
+      <i class="pi pi-car text-gray-400 text-5xl mb-4"></i>
+      <p class="text-gray-500 text-lg">No vehicles available</p>
+      <button
+        pButton
+        type="button"
+        label="Add First Vehicle"
+        icon="pi pi-plus"
+        class="p-button-outlined mt-4"
+        (click)="openAddForm()"
+      ></button>
+    </div>
+  </p-card>
+
+  <!-- Add/Edit Vehicle Dialog -->
+  <p-dialog
+    [(visible)]="showForm"
+    [modal]="true"
+    [style]="{ width: '500px' }"
+    [draggable]="false"
+    [resizable]="false"
+    [header]="editMode ? 'Edit Vehicle' : 'Add New Vehicle'"
+  >
+    <form (ngSubmit)="saveVehicle()" class="p-fluid space-y-4">
+      <div class="field">
+        <label for="make" class="block font-medium mb-2">Make</label>
+        <input
+          id="make"
+          type="text"
+          pInputText
+          [(ngModel)]="form.make"
+          name="make"
+          [required]="true"
+          placeholder="e.g. Toyota"
+        />
+      </div>
+
+      <div class="field">
+        <label for="model" class="block font-medium mb-2">Model</label>
+        <input
+          id="model"
+          type="text"
+          pInputText
+          [(ngModel)]="form.model"
+          name="model"
+          [required]="true"
+          placeholder="e.g. Camry"
+        />
+      </div>
+
+      <div class="field grid">
+        <div class="col-6 pr-2">
+          <label for="year" class="block font-medium mb-2">Year</label>
+          <p-inputNumber
+            id="year"
+            [(ngModel)]="form.year"
+            name="year"
+            [min]="2000"
+            [max]="currentYear"
+            [required]="true"
+          ></p-inputNumber>
+        </div>
+        <div class="col-6 pl-2">
+          <label for="capacity" class="block font-medium mb-2">Capacity</label>
+          <p-inputNumber
+            id="capacity"
+            [(ngModel)]="form.capacity"
+            name="capacity"
+            [min]="1"
+            [required]="true"
+          ></p-inputNumber>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="chassisNumber" class="block font-medium mb-2">Chassis Number</label>
+        <input
+          id="chassisNumber"
+          type="text"
+          pInputText
+          [(ngModel)]="form.chassisNumber"
+          name="chassisNumber"
+          [required]="true"
+          placeholder="Unique identifier"
+        />
+      </div>
+
+      <div class="field grid">
+        <div class="col-6 pr-2">
+          <label for="type" class="block font-medium mb-2">Type</label>
+          <p-dropdown
+            id="type"
+            [(ngModel)]="form.type"
+            name="type"
+            [options]="vehicleTypes"
+            [required]="true"
+          ></p-dropdown>
+        </div>
+        <div class="col-6 pl-2">
+          <label for="status" class="block font-medium mb-2">Status</label>
+          <p-dropdown
+            id="status"
+            [(ngModel)]="form.status"
+            name="status"
+            [options]="statusOptions"
+            [required]="true"
+          ></p-dropdown>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 mt-6">
+        <button
+          type="button"
+          pButton
+          label="Cancel"
+          class="p-button-outlined p-button-secondary"
+          (click)="cancelForm()"
+        ></button>
+        <button
+          type="submit"
+          pButton
+          label="Save"
+          class="p-button-primary"
+          [disabled]="!form.make || !form.model"
+          [loading]="saving"
+        ></button>
+      </div>
+    </form>
+  </p-dialog>
+
+  <!-- Toast Notifications -->
+  <p-toast position="top-right"></p-toast>
+</div>

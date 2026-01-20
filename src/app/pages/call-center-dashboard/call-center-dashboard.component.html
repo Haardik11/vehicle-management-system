@@ -1,0 +1,366 @@
+<div class="p-6 max-w-7xl mx-auto space-y-6 font-sans bg-gray-50 min-h-screen text-gray-800">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Call Center Dashboard</h1>
+      <p class="text-gray-600">Manage bookings, vehicles, and customer requests</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-sm text-gray-500">Last updated: {{ todayDateDate | date:'mediumDate' }}</span>
+      <p-badge *ngIf="pendingBookings > 0" [value]="pendingBookings.toString()" severity="warning"></p-badge>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <p-card class="shadow-sm border-l-4 border-blue-500">
+      <div class="flex items-center gap-4">
+        <i class="pi pi-calendar text-blue-500 text-2xl"></i>
+        <div>
+          <p class="text-gray-500 text-sm font-medium">Total Bookings</p>
+          <p class="text-2xl font-bold">{{ totalBookings }}</p>
+        </div>
+      </div>
+    </p-card>
+    <p-card class="shadow-sm border-l-4 border-green-500">
+      <div class="flex items-center gap-4">
+        <i class="pi pi-check-circle text-green-500 text-2xl"></i>
+        <div>
+          <p class="text-gray-500 text-sm font-medium">Confirmed</p>
+          <p class="text-2xl font-bold">{{ confirmedBookings }}</p>
+        </div>
+      </div>
+    </p-card>
+    <p-card class="shadow-sm border-l-4 border-yellow-500">
+      <div class="flex items-center gap-4">
+        <i class="pi pi-exclamation-triangle text-yellow-500 text-2xl"></i>
+        <div>
+          <p class="text-gray-500 text-sm font-medium">Pending</p>
+          <p class="text-2xl font-bold">{{ pendingBookings }}</p>
+        </div>
+      </div>
+    </p-card>
+    <p-card class="shadow-sm border-l-4 border-red-500">
+      <div class="flex items-center gap-4">
+        <i class="pi pi-times-circle text-red-500 text-2xl"></i>
+        <div>
+          <p class="text-gray-500 text-sm font-medium">Cancelled</p>
+          <p class="text-2xl font-bold">{{ cancelledBookings }}</p>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Today's bookings -->
+  <p-card class="shadow-sm" header="Today's Bookings">
+    <ng-template pTemplate="header">
+      <div class="flex justify-between items-center">
+        <h2 class="text-xl font-semibold text-gray-900">Today's Bookings</h2>
+        <span class="text-sm text-gray-500">{{ todayDateDate | date:'fullDate' }}</span>
+      </div>
+    </ng-template>
+
+    <p-table
+      [value]="getTodayBookings()"
+      [paginator]="true"
+      [rows]="5"
+      [rowsPerPageOptions]="[5,10,25]"
+      styleClass="p-datatable-sm p-datatable-striped"
+      responsiveLayout="scroll"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="user">User <p-sortIcon field="user"></p-sortIcon></th>
+          <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+          <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+          <th>Vehicle</th>
+          <th style="width: 220px">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-b>
+        <tr [ngClass]="{ 'bg-yellow-50': b.status === 'Pending', 'hover:bg-gray-50': true }">
+          <td>{{ getUserName(b.user) }}</td>
+          <td>{{ b.date | date:'shortDate' }}</td>
+          <td><p-tag [value]="b.status" [severity]="getSeverity(b.status)"></p-tag></td>
+
+          <td>
+            <div class="flex flex-col">
+              <span [ngClass]="{ 'text-gray-400': !b.vehicle, 'font-medium': b.vehicle }">
+                {{ getVehicleName(b.vehicle) }}
+              </span>
+              <small *ngIf="getRequestedVehicleId(b)" class="text-gray-500">
+                Requested: {{ getVehicleName(getRequestedVehicleId(b)) }}
+              </small>
+            </div>
+          </td>
+
+          <td>
+            <div class="flex flex-wrap gap-2">
+              <button pButton icon="pi pi-eye" class="p-button-sm p-button-secondary p-button-text"
+                      (click)="showBookingDetails(b)" pTooltip="View Details"></button>
+
+              <button pButton icon="pi pi-car" class="p-button-sm p-button-text"
+                      (click)="showVehicleAssignment(b)" pTooltip="Assign Vehicle"></button>
+
+              <p-dropdown
+                [options]="statusOptions"
+                optionLabel="label"
+                optionValue="value"
+                placeholder="Change status"
+                styleClass="w-44"
+                (onChange)="updateStatus(b, $event)"
+              ></p-dropdown>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center py-6 text-gray-500">
+            <i class="pi pi-calendar text-2xl text-gray-300 mb-2"></i>
+            <p>No bookings scheduled for today</p>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+  <!-- Upcoming + Calendar -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <p-card header="Upcoming Bookings" class="shadow-sm">
+      <p-table
+        [value]="getUpcomingBookings()"
+        [paginator]="true"
+        [rows]="5"
+        styleClass="p-datatable-sm"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="user">User <p-sortIcon field="user"></p-sortIcon></th>
+            <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+            <th>Status</th>
+            <th>Vehicle</th>
+            <th style="width: 220px">Actions</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-b>
+          <tr class="hover:bg-gray-50">
+            <td>{{ getUserName(b.user) }}</td>
+            <td>{{ b.date | date:'mediumDate' }}</td>
+            <td><p-tag [value]="b.status" [severity]="getSeverity(b.status)"></p-tag></td>
+            <td>
+              <div class="flex flex-col">
+                <span [ngClass]="{ 'text-gray-400': !b.vehicle, 'font-medium': b.vehicle }">
+                  {{ getVehicleName(b.vehicle) }}
+                </span>
+                <small *ngIf="getRequestedVehicleId(b)" class="text-gray-500">
+                  Requested: {{ getVehicleName(getRequestedVehicleId(b)) }}
+                </small>
+              </div>
+            </td>
+            <td>
+              <div class="flex flex-wrap gap-2">
+                <button pButton icon="pi pi-eye" class="p-button-sm p-button-secondary p-button-text"
+                        (click)="showBookingDetails(b)" pTooltip="View Details"></button>
+
+                <button pButton icon="pi pi-car" class="p-button-sm p-button-text"
+                        (click)="showVehicleAssignment(b)" pTooltip="Assign Vehicle"></button>
+
+                <p-dropdown
+                  [options]="statusOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Change status"
+                  styleClass="w-44"
+                  (onChange)="updateStatus(b, $event)"
+                ></p-dropdown>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5" class="text-center py-6 text-gray-500">
+              <i class="pi pi-calendar-plus text-2xl text-gray-300 mb-2"></i>
+              <p>No upcoming bookings</p>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+
+    <p-card header="Booking Calendar" class="shadow-sm">
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </p-card>
+  </div>
+
+  <!-- Search & Filter -->
+  <p-card header="Booking Management" class="shadow-sm">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+        <p-calendar [(ngModel)]="filterDate" [showIcon]="true" dateFormat="yy-mm-dd"
+                    placeholder="Filter by date" [showButtonBar]="true" styleClass="w-full"></p-calendar>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+        <p-dropdown [(ngModel)]="filterStatus" [options]="statusOptions"
+                    optionLabel="label" optionValue="value"
+                    placeholder="Filter by status" styleClass="w-full"></p-dropdown>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">User ID</label>
+        <input [(ngModel)]="searchUser" pInputText placeholder="Search by user ID" class="w-full" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Vehicle</label>
+        <input [(ngModel)]="searchVehicle" pInputText placeholder="Search by vehicle" class="w-full" />
+      </div>
+    </div>
+
+    <p-table
+      [value]="filteredBookings()"
+      [paginator]="true"
+      [rows]="5"
+      styleClass="p-datatable-sm"
+      responsiveLayout="scroll"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="user">User <p-sortIcon field="user"></p-sortIcon></th>
+          <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+          <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+          <th>Vehicle</th>
+          <th style="width: 220px">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-b>
+        <tr class="hover:bg-gray-50">
+          <td>{{ getUserName(b.user) }}</td>
+          <td>{{ b.date | date:'mediumDate' }}</td>
+          <td><p-tag [value]="b.status" [severity]="getSeverity(b.status)"></p-tag></td>
+          <td>
+            <div class="flex flex-col">
+              <span [ngClass]="{ 'text-gray-400': !b.vehicle, 'font-medium': b.vehicle }">
+                {{ getVehicleName(b.vehicle) }}
+              </span>
+              <small *ngIf="getRequestedVehicleId(b)" class="text-gray-500">
+                Requested: {{ getVehicleName(getRequestedVehicleId(b)) }}
+              </small>
+            </div>
+          </td>
+          <td>
+            <div class="flex flex-wrap gap-2">
+              <button pButton icon="pi pi-eye" class="p-button-sm p-button-secondary p-button-text"
+                      (click)="showBookingDetails(b)" pTooltip="View Details"></button>
+
+              <button pButton icon="pi pi-car" class="p-button-sm p-button-text"
+                      (click)="showVehicleAssignment(b)" pTooltip="Assign Vehicle"></button>
+
+              <p-dropdown
+                [options]="statusOptions"
+                optionLabel="label"
+                optionValue="value"
+                placeholder="Change status"
+                styleClass="w-44"
+                (onChange)="updateStatus(b, $event)"
+              ></p-dropdown>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center py-6 text-gray-500">
+            <i class="pi pi-search text-2xl text-gray-300 mb-2"></i>
+            <p>No bookings match your filters</p>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+  <!-- Booking Details Dialog (NO assignment UI) -->
+  <p-dialog header="Booking Details" [(visible)]="displayBookingDetails" [modal]="true" [style]="{width: '50vw'}">
+    <div *ngIf="selectedBookingDetails" class="space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <h3 class="font-semibold text-gray-600">User</h3>
+          <p>{{ getUserName(selectedBookingDetails.user) }}</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-600">Status</h3>
+          <p-tag [value]="selectedBookingDetails.status"
+                 [severity]="getBookingStatusSeverity(selectedBookingDetails.status)"></p-tag>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <h3 class="font-semibold text-gray-600">Date & Time</h3>
+          <p>{{ selectedBookingDetails.date | date:'mediumDate' }} at {{ selectedBookingDetails.time || '--:--' }}</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-600">Current Vehicle</h3>
+          <p>{{ getVehicleName(selectedBookingDetails.vehicle) || 'Not assigned' }}</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <h3 class="font-semibold text-gray-600">Pickup Location</h3>
+          <p>{{ selectedBookingDetails.pickup_location || 'Not specified' }}</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-600">Drop-off Location</h3>
+          <p>{{ selectedBookingDetails.drop_location || 'Not specified' }}</p>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-gray-600">Purpose</h3>
+        <p>{{ selectedBookingDetails.purpose || 'Not specified' }}</p>
+      </div>
+    </div>
+  </p-dialog>
+
+  <!-- Vehicle Assignment Dialog (Requested Vehicle section removed) -->
+  <p-dialog header="Assign Vehicle" [(visible)]="displayVehicleAssignment" [modal]="true" [style]="{width: '40vw'}">
+    <div *ngIf="selectedBookingForAssignment" class="space-y-4">
+      <div class="mb-4">
+        <h4 class="font-medium text-gray-600 mb-2">Booking Information</h4>
+        <p><strong>User:</strong> {{ getUserName(selectedBookingForAssignment.user) }}</p>
+        <p><strong>Date:</strong> {{ selectedBookingForAssignment.date | date:'mediumDate' }}</p>
+        <p><strong>Current Vehicle:</strong> {{ getVehicleName(selectedBookingForAssignment.vehicle) || 'None' }}</p>
+      </div>
+
+      <div>
+        <h4 class="font-medium text-gray-600 mb-2">Available Vehicles</h4>
+        <p-dropdown [options]="getVehicleAssignmentOptions(selectedBookingForAssignment)"
+                    optionLabel="label" optionValue="value"
+                    [(ngModel)]="selectedVehicleForAssignment"
+                    [filter]="true" appendTo="body"
+                    placeholder="Select a vehicle" styleClass="w-full">
+        </p-dropdown>
+        
+        <div class="flex justify-end mt-4 gap-2">
+          <button pButton label="Cancel" class="p-button-text"
+                  (click)="displayVehicleAssignment = false"></button>
+          <button pButton label="Assign Vehicle" class="p-button-primary"
+                  [disabled]="!selectedVehicleForAssignment"
+                  (click)="assignVehicleToBooking(selectedBookingForAssignment, selectedVehicleForAssignment!)">
+          </button>
+        </div>
+      </div>
+    </div>
+  </p-dialog>
+
+  <p-toast position="top-right"></p-toast>
+</div>

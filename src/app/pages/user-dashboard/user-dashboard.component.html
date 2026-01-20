@@ -1,0 +1,274 @@
+<div class="p-6 max-w-7xl mx-auto space-y-8 font-sans bg-gray-50 min-h-screen">
+  <p-toast position="top-right"></p-toast>
+
+  <header class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800">
+        <span class="text-blue-600">Vehicle</span> Booking System
+      </h1>
+      <p class="text-gray-500 mt-1">Book your perfect vehicle for any occasion</p>
+    </div>
+    <div class="flex items-center space-x-4">
+      <span class="text-gray-600 hidden sm:inline">Welcome, User</span>
+      <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold">
+        U
+      </div>
+    </div>
+  </header>
+
+  <section class="bg-white shadow-sm rounded-lg p-6 border border-gray-100">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">Available Vehicles</h2>
+        <p class="text-gray-500 text-sm">Filter by your requirements</p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+        <div class="flex-1 min-w-[200px]">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Booking Date</label>
+          <div class="relative">
+            <input type="date" [(ngModel)]="selectedDate" 
+                   (change)="onDateChange()"
+                   [min]="todayDate"
+                   class="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+          </div>
+        </div>
+        <div class="flex-1 min-w-[160px]">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Vehicle Capacity</label>
+          <select [(ngModel)]="selectedCapacity" (change)="applyFilters()" 
+                  class="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+            <option value="">All Capacities</option>
+            <option value="4">4 Seater</option>
+            <option value="5">5 Seater</option>
+            <option value="7">7 Seater</option>
+            <option value="8">8 Seater</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="text-center py-10">
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mb-2"></div>
+      <p class="text-gray-600">Loading vehicles...</p>
+    </div>
+
+    <div *ngIf="!loading">
+      <div *ngIf="filteredVehicles.length > 0; else noVehicles" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div *ngFor="let vehicle of filteredVehicles" 
+             class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800">{{ vehicle.make }} {{ vehicle.model }}</h3>
+              <span class="inline-block px-2 py-1 text-xs font-medium rounded-full mt-1 bg-green-100 text-green-800">
+                Available
+              </span>
+            </div>
+            <div class="bg-blue-100 p-2 rounded-lg">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+              </svg>
+            </div>
+          </div>
+          
+          <div class="space-y-2 text-sm text-gray-600 mb-4">
+            <div class="flex items-center">
+              <svg class="w-4 h-4 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path>
+                <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"></path>
+              </svg>
+              Type: {{ vehicle.type || 'N/A' }}
+            </div>
+            <div class="flex items-center">
+              <svg class="w-4 h-4 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+              </svg>
+              Capacity: {{ vehicle.capacity }} seats
+            </div>
+          </div>
+          
+          <button class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors duration-200 flex items-center justify-center"
+                  (click)="openBookingForm(vehicle)">
+            Book Now
+          </button>
+        </div>
+      </div>
+      
+      <ng-template #noVehicles>
+        <div *ngIf="selectedDate; else selectDatePrompt" class="text-center py-10 bg-gray-50 rounded-lg">
+          <h3 class="mt-2 text-sm font-medium text-gray-900">No vehicles available</h3>
+          <p class="mt-1 text-sm text-gray-500">Try adjusting your filters or select a different date.</p>
+        </div>
+        <ng-template #selectDatePrompt>
+          <div class="text-center py-10 bg-gray-50 rounded-lg">
+            <h3 class="mt-2 text-sm font-medium text-gray-900">Select a date to see available vehicles</h3>
+            <p class="mt-1 text-sm text-gray-500">Choose your booking date to view available options.</p>
+          </div>
+        </ng-template>
+      </ng-template>
+    </div>
+  </section>
+
+  <section class="bg-white shadow-sm rounded-lg p-6 border border-gray-100">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800">My Bookings</h2>
+        <p class="text-gray-500 text-sm">Your upcoming and past reservations</p>
+      </div>
+      <button (click)="fetchBookings()" class="text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center">
+        Refresh
+      </button>
+    </div>
+
+    <div *ngIf="loading && bookings.length === 0" class="text-center py-6">
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mb-2"></div>
+      <p class="text-gray-600">Loading bookings...</p>
+    </div>
+
+    <div *ngIf="!loading || bookings.length > 0" class="mb-8">
+      <h3 class="text-lg font-medium text-gray-800 mb-3 flex items-center">
+        Upcoming Bookings
+      </h3>
+      
+      <div *ngIf="getUpcomingBookings().length > 0; else noUpcoming" class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let booking of getUpcomingBookings()">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                {{ getVehicleName(booking.vehicle) }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-500 whitespace-pre-line">{{ formatBookingDetails(booking) }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" 
+                      [ngClass]="{
+                        'bg-green-100 text-green-800': booking.status === 'Confirmed',
+                        'bg-yellow-100 text-yellow-800': booking.status === 'Pending',
+                        'bg-red-100 text-red-800': booking.status === 'Cancelled'
+                      }">
+                  {{ booking.status }}
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <button *ngIf="booking.status === 'Pending'" 
+                        (click)="cancelBooking(booking.id)"
+                        class="text-red-600 hover:text-red-900">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noUpcoming>
+        <div class="text-center py-6 bg-gray-50 rounded-lg">
+          <p class="text-gray-500">No upcoming bookings found.</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <div *ngIf="!loading || bookings.length > 0">
+      <h3 class="text-lg font-medium text-gray-800 mb-3 flex items-center">
+        Past Bookings
+      </h3>
+      
+      <div *ngIf="getPastBookings().length > 0; else noPast" class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let booking of getPastBookings()">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                {{ getVehicleName(booking.vehicle) }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-500 whitespace-pre-line">{{ formatBookingDetails(booking) }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" 
+                      [ngClass]="{
+                        'bg-green-100 text-green-800': booking.status === 'Completed',
+                        'bg-yellow-100 text-yellow-800': booking.status === 'Pending',
+                        'bg-red-100 text-red-800': booking.status === 'Cancelled'
+                      }">
+                  {{ booking.status }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noPast>
+        <div class="text-center py-6 bg-gray-50 rounded-lg">
+          <p class="text-gray-500">No past bookings found.</p>
+        </div>
+      </ng-template>
+    </div>
+  </section>
+
+  <div *ngIf="showBookingForm" class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50 p-4">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden">
+      <div class="bg-blue-600 px-6 py-4">
+        <h3 class="text-xl font-semibold text-white">Book {{ selectedVehicle?.make }} {{ selectedVehicle?.model }}</h3>
+      </div>
+      
+      <div class="p-6 space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+          <input type="date" [(ngModel)]="selectedDate" class="w-full p-2 border rounded-md" disabled>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Booking Time*</label>
+          <input [(ngModel)]="bookingTime" type="time" class="w-full p-2 border rounded-md" required>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Pickup Location*</label>
+          <input [(ngModel)]="pickupLocation" class="w-full p-2 border rounded-md" required>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Drop-off Location*</label>
+          <input [(ngModel)]="dropLocation" class="w-full p-2 border rounded-md" required>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Purpose</label>
+          <select [(ngModel)]="bookingPurpose" class="w-full p-2 border rounded-md">
+            <option value="">Select purpose</option>
+            <option value="Business">Business</option>
+            <option value="Personal">Personal</option>
+            <option value="Event">Event</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="bg-gray-50 px-6 py-4 flex justify-end space-x-3">
+        <button (click)="showBookingForm = false" class="px-4 py-2 border rounded-md">
+          Cancel
+        </button>
+        <button (click)="confirmBooking()" 
+                [disabled]="!bookingTime || !selectedDate || !pickupLocation || !dropLocation || bookingLoading"
+                class="px-4 py-2 bg-blue-600 text-white rounded-md flex items-center disabled:opacity-50">
+          <span *ngIf="!bookingLoading">Confirm Booking</span>
+          <span *ngIf="bookingLoading" class="flex items-center">
+            Processing...
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
