@@ -1,59 +1,90 @@
-# AngularGloballogicProject
+# Vehicle Management System
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+This is a full-stack **Vehicle Management System** consisting of a frontend and backend application.  
+The project provides a simple UI to manage vehicle data and perform common operations related to fleet management.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🧠 Overview
 
-```bash
-ng serve
-```
+This application allows users to:
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- View and manage a list of vehicles
+- Add, edit, and delete vehicle records
+- Search and filter vehicles
+- Build and run using a modern web stack
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🛠 Tech Stack
 
-```bash
-ng generate component component-name
-```
+**Frontend:**  
+✔ Angular (TypeScript)  
+✔ Tailwind CSS  
+✔ Responsive UI components
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+**Backend:**  
+✔ (Assuming based on folder) REST API backend  
+✔ Project structure ready for server logic
 
-```bash
-ng generate --help
-```
+**Tooling / Config:**  
+✔ Angular CLI (v19.2.15)  
+✔ Node.js / npm  
+✔ GitHub version control
 
-## Building
+---
+vehicle-management/
+├── public/
+├── src/
+│ └── app/ (Angular Modules & Components)
+├── vehicle-frontend/ (Frontend Angular App)
+├── vehicle-backend/ (Backend API App)
+├── angular.json
+├── package.json
+├── tailwind.config.js
+└── README.md
 
-To build the project run:
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🚀 How to Run
 
-## Running unit tests
+1. Clone the repository:  
+   `git clone https://github.com/yourusername/vehicle-management-system.git`
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+2. Install frontend dependencies:  
+   `cd vehicle-frontend && npm install`
 
-```bash
-ng test
-```
+3. Start Angular dev server:  
+   `ng serve`
 
-## Running end-to-end tests
+4. Open in browser:  
+   `http://localhost:4200`
 
-For end-to-end (e2e) testing, run:
+5. Setup backend:  
+   `cd vehicle-backend` and install/run backend server (update this section with your server commands)
 
-```bash
-ng e2e
-```
+---
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 📌 Features to Add (future)
 
-## Additional Resources
+✔ Vehicle CRUD  
+✔ Search & filter  
+✔ Authentication  
+✔ REST API improvements  
+✔ Deployment scripts
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+## 🤝 Contribution
+
+Contributions are welcome!  
+Please open an issue or submit a pull request.
+
+---
+
+
+
+
+## 📁 Project Structure
+
