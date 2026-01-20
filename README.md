@@ -33,16 +33,19 @@ This application allows users to:
 ✔ GitHub version control
 
 ---
+## 📁 Project Structure
+
 vehicle-management/
 ├── public/
 ├── src/
-│ └── app/ (Angular Modules & Components)
-├── vehicle-frontend/ (Frontend Angular App)
-├── vehicle-backend/ (Backend API App)
+│   └── app/                # Angular modules & components
+├── vehicle-frontend/       # Frontend Angular application
+├── vehicle-backend/        # Backend API application
 ├── angular.json
 ├── package.json
 ├── tailwind.config.js
 └── README.md
+
 
 
 ---
@@ -82,6 +85,15 @@ Contributions are welcome!
 Please open an issue or submit a pull request.
 
 ---
+
+## 👤 Author
+
+**Haardik Mago**  
+- GitHub: [Haardik11](https://github.com/Haardik11)  
+- LinkedIn: [*(add your LinkedIn link here)* ](https://www.linkedin.com/in/haardik-mago-637972157?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B6A3VFxy%2FTVK8bJf4%2BPNeLw%3D%3D) 
+- Email: Haardikmago#@gmail.com 
+
+
 
 
 
