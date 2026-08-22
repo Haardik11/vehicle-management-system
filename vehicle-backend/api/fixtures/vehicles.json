@@ -1,0 +1,1562 @@
+[
+{
+  "model": "api.vehicle",
+  "pk": 1,
+  "fields": {
+    "make": "Toyota",
+    "model": "Fortuner",
+    "year": 2024,
+    "chassis_number": "CH123456",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 2,
+  "fields": {
+    "make": "Maruti Suzuki",
+    "model": "Swift",
+    "year": 2023,
+    "chassis_number": "CH234567",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 3,
+  "fields": {
+    "make": "Hyundai",
+    "model": "Creta",
+    "year": 2022,
+    "chassis_number": "CH345678",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 4,
+  "fields": {
+    "make": "Honda",
+    "model": "City",
+    "year": 2021,
+    "chassis_number": "CH456789",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 5,
+  "fields": {
+    "make": "Tata",
+    "model": "Nexon",
+    "year": 2023,
+    "chassis_number": "CH567890",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 6,
+  "fields": {
+    "make": "Mahindra",
+    "model": "Bolero",
+    "year": 2020,
+    "chassis_number": "CH678901",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 7,
+  "fields": {
+    "make": "Toyota",
+    "model": "Innova Crysta",
+    "year": 2024,
+    "chassis_number": "CH789012",
+    "vehicle_type": "MUV",
+    "capacity": 8,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 8,
+  "fields": {
+    "make": "Hyundai",
+    "model": "Creta",
+    "year": 2020,
+    "chassis_number": "CH100008",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 9,
+  "fields": {
+    "make": "Hyundai",
+    "model": "Alcazar",
+    "year": 2024,
+    "chassis_number": "CH100009",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 10,
+  "fields": {
+    "make": "Maruti Suzuki",
+    "model": "Swift",
+    "year": 2017,
+    "chassis_number": "CH100010",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 11,
+  "fields": {
+    "make": "Tata",
+    "model": "Tiago",
+    "year": 2025,
+    "chassis_number": "CH100011",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 12,
+  "fields": {
+    "make": "Ford",
+    "model": "EcoSport",
+    "year": 2024,
+    "chassis_number": "CH100012",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 13,
+  "fields": {
+    "make": "Volkswagen",
+    "model": "Vento",
+    "year": 2016,
+    "chassis_number": "CH100013",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 14,
+  "fields": {
+    "make": "Kia",
+    "model": "Sonet",
+    "year": 2020,
+    "chassis_number": "CH100014",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 15,
+  "fields": {
+    "make": "Hyundai",
+    "model": "Creta",
+    "year": 2022,
+    "chassis_number": "CH100015",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 16,
+  "fields": {
+    "make": "Volkswagen",
+    "model": "Vento",
+    "year": 2016,
+    "chassis_number": "CH100016",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 17,
+  "fields": {
+    "make": "Ford",
+    "model": "EcoSport",
+    "year": 2022,
+    "chassis_number": "CH100017",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 18,
+  "fields": {
+    "make": "Volkswagen",
+    "model": "Vento",
+    "year": 2025,
+    "chassis_number": "CH100018",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 19,
+  "fields": {
+    "make": "Hyundai",
+    "model": "Creta",
+    "year": 2019,
+    "chassis_number": "CH100019",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 20,
+  "fields": {
+    "make": "Tata",
+    "model": "Nexon",
+    "year": 2022,
+    "chassis_number": "CH100020",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 21,
+  "fields": {
+    "make": "Honda",
+    "model": "WR-V",
+    "year": 2021,
+    "chassis_number": "CH100021",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 22,
+  "fields": {
+    "make": "Hyundai",
+    "model": "Tucson",
+    "year": 2018,
+    "chassis_number": "CH100022",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 23,
+  "fields": {
+    "make": "Honda",
+    "model": "Civic",
+    "year": 2022,
+    "chassis_number": "CH100023",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 24,
+  "fields": {
+    "make": "Ford",
+    "model": "EcoSport",
+    "year": 2021,
+    "chassis_number": "CH100024",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 25,
+  "fields": {
+    "make": "Tata",
+    "model": "Nexon",
+    "year": 2021,
+    "chassis_number": "CH100025",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 26,
+  "fields": {
+    "make": "Tata",
+    "model": "Tiago",
+    "year": 2021,
+    "chassis_number": "CH100026",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 27,
+  "fields": {
+    "make": "Renault",
+    "model": "Triber",
+    "year": 2023,
+    "chassis_number": "CH100027",
+    "vehicle_type": "MUV",
+    "capacity": 8,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 28,
+  "fields": {
+    "make": "Mahindra",
+    "model": "Scorpio",
+    "year": 2019,
+    "chassis_number": "CH100028",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 29,
+  "fields": {
+    "make": "Mahindra",
+    "model": "XUV300",
+    "year": 2022,
+    "chassis_number": "CH100029",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 30,
+  "fields": {
+    "make": "Toyota",
+    "model": "Innova Crysta",
+    "year": 2018,
+    "chassis_number": "CH100030",
+    "vehicle_type": "MUV",
+    "capacity": 8,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 31,
+  "fields": {
+    "make": "Renault",
+    "model": "Kwid",
+    "year": 2016,
+    "chassis_number": "CH100031",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 32,
+  "fields": {
+    "make": "Honda",
+    "model": "Amaze",
+    "year": 2022,
+    "chassis_number": "CH100032",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 33,
+  "fields": {
+    "make": "Hyundai",
+    "model": "Verna",
+    "year": 2022,
+    "chassis_number": "CH100033",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 34,
+  "fields": {
+    "make": "Renault",
+    "model": "Duster",
+    "year": 2020,
+    "chassis_number": "CH100034",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 35,
+  "fields": {
+    "make": "Hyundai",
+    "model": "Alcazar",
+    "year": 2024,
+    "chassis_number": "CH100035",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 36,
+  "fields": {
+    "make": "Hyundai",
+    "model": "i20",
+    "year": 2022,
+    "chassis_number": "CH100036",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 37,
+  "fields": {
+    "make": "Renault",
+    "model": "Kwid",
+    "year": 2020,
+    "chassis_number": "CH100037",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 38,
+  "fields": {
+    "make": "Honda",
+    "model": "City",
+    "year": 2020,
+    "chassis_number": "CH100038",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 39,
+  "fields": {
+    "make": "Volkswagen",
+    "model": "Polo",
+    "year": 2018,
+    "chassis_number": "CH100039",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 40,
+  "fields": {
+    "make": "Honda",
+    "model": "City",
+    "year": 2025,
+    "chassis_number": "CH100040",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 41,
+  "fields": {
+    "make": "Renault",
+    "model": "Kwid",
+    "year": 2017,
+    "chassis_number": "CH100041",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 42,
+  "fields": {
+    "make": "Mahindra",
+    "model": "Scorpio",
+    "year": 2016,
+    "chassis_number": "CH100042",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 43,
+  "fields": {
+    "make": "Hyundai",
+    "model": "Creta",
+    "year": 2023,
+    "chassis_number": "CH100043",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 44,
+  "fields": {
+    "make": "Honda",
+    "model": "Amaze",
+    "year": 2023,
+    "chassis_number": "CH100044",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 45,
+  "fields": {
+    "make": "Honda",
+    "model": "WR-V",
+    "year": 2024,
+    "chassis_number": "CH100045",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 46,
+  "fields": {
+    "make": "Tata",
+    "model": "Tiago",
+    "year": 2019,
+    "chassis_number": "CH100046",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 47,
+  "fields": {
+    "make": "Kia",
+    "model": "Carens",
+    "year": 2021,
+    "chassis_number": "CH100047",
+    "vehicle_type": "MUV",
+    "capacity": 8,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 48,
+  "fields": {
+    "make": "Ford",
+    "model": "Endeavour",
+    "year": 2017,
+    "chassis_number": "CH100048",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 49,
+  "fields": {
+    "make": "Toyota",
+    "model": "Fortuner",
+    "year": 2025,
+    "chassis_number": "CH100049",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 50,
+  "fields": {
+    "make": "Tata",
+    "model": "Nexon",
+    "year": 2017,
+    "chassis_number": "CH100050",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 51,
+  "fields": {
+    "make": "Tata",
+    "model": "Nexon",
+    "year": 2016,
+    "chassis_number": "CH100051",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 52,
+  "fields": {
+    "make": "Ford",
+    "model": "EcoSport",
+    "year": 2020,
+    "chassis_number": "CH100052",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 53,
+  "fields": {
+    "make": "Ford",
+    "model": "EcoSport",
+    "year": 2025,
+    "chassis_number": "CH100053",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 54,
+  "fields": {
+    "make": "Renault",
+    "model": "Triber",
+    "year": 2019,
+    "chassis_number": "CH100054",
+    "vehicle_type": "MUV",
+    "capacity": 8,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 55,
+  "fields": {
+    "make": "Hyundai",
+    "model": "Alcazar",
+    "year": 2022,
+    "chassis_number": "CH100055",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 56,
+  "fields": {
+    "make": "Renault",
+    "model": "Duster",
+    "year": 2016,
+    "chassis_number": "CH100056",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 57,
+  "fields": {
+    "make": "Maruti Suzuki",
+    "model": "Ertiga",
+    "year": 2021,
+    "chassis_number": "CH100057",
+    "vehicle_type": "MUV",
+    "capacity": 8,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 58,
+  "fields": {
+    "make": "Tata",
+    "model": "Harrier",
+    "year": 2019,
+    "chassis_number": "CH100058",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 59,
+  "fields": {
+    "make": "Kia",
+    "model": "Seltos",
+    "year": 2020,
+    "chassis_number": "CH100059",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 60,
+  "fields": {
+    "make": "Renault",
+    "model": "Duster",
+    "year": 2017,
+    "chassis_number": "CH100060",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 61,
+  "fields": {
+    "make": "Maruti Suzuki",
+    "model": "Swift",
+    "year": 2019,
+    "chassis_number": "CH100061",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 62,
+  "fields": {
+    "make": "Kia",
+    "model": "Sonet",
+    "year": 2023,
+    "chassis_number": "CH100062",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 63,
+  "fields": {
+    "make": "Maruti Suzuki",
+    "model": "Baleno",
+    "year": 2022,
+    "chassis_number": "CH100063",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 64,
+  "fields": {
+    "make": "Kia",
+    "model": "Sonet",
+    "year": 2023,
+    "chassis_number": "CH100064",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 65,
+  "fields": {
+    "make": "Renault",
+    "model": "Kwid",
+    "year": 2019,
+    "chassis_number": "CH100065",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 66,
+  "fields": {
+    "make": "Tata",
+    "model": "Nexon",
+    "year": 2025,
+    "chassis_number": "CH100066",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 67,
+  "fields": {
+    "make": "Toyota",
+    "model": "Fortuner",
+    "year": 2016,
+    "chassis_number": "CH100067",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 68,
+  "fields": {
+    "make": "Ford",
+    "model": "EcoSport",
+    "year": 2016,
+    "chassis_number": "CH100068",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 69,
+  "fields": {
+    "make": "Honda",
+    "model": "City",
+    "year": 2025,
+    "chassis_number": "CH100069",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 70,
+  "fields": {
+    "make": "Tata",
+    "model": "Altroz",
+    "year": 2017,
+    "chassis_number": "CH100070",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 71,
+  "fields": {
+    "make": "Tata",
+    "model": "Tiago",
+    "year": 2025,
+    "chassis_number": "CH100071",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 72,
+  "fields": {
+    "make": "Volkswagen",
+    "model": "Polo",
+    "year": 2022,
+    "chassis_number": "CH100072",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 73,
+  "fields": {
+    "make": "Volkswagen",
+    "model": "Taigun",
+    "year": 2021,
+    "chassis_number": "CH100073",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 74,
+  "fields": {
+    "make": "Toyota",
+    "model": "Innova Crysta",
+    "year": 2020,
+    "chassis_number": "CH100074",
+    "vehicle_type": "MUV",
+    "capacity": 8,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 75,
+  "fields": {
+    "make": "Honda",
+    "model": "WR-V",
+    "year": 2023,
+    "chassis_number": "CH100075",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 76,
+  "fields": {
+    "make": "Maruti Suzuki",
+    "model": "Ertiga",
+    "year": 2025,
+    "chassis_number": "CH100076",
+    "vehicle_type": "MUV",
+    "capacity": 8,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 77,
+  "fields": {
+    "make": "Hyundai",
+    "model": "Creta",
+    "year": 2024,
+    "chassis_number": "CH100077",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 78,
+  "fields": {
+    "make": "Honda",
+    "model": "WR-V",
+    "year": 2017,
+    "chassis_number": "CH100078",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 79,
+  "fields": {
+    "make": "Mahindra",
+    "model": "Scorpio",
+    "year": 2023,
+    "chassis_number": "CH100079",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 80,
+  "fields": {
+    "make": "Volkswagen",
+    "model": "Taigun",
+    "year": 2024,
+    "chassis_number": "CH100080",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 81,
+  "fields": {
+    "make": "Mahindra",
+    "model": "Bolero",
+    "year": 2018,
+    "chassis_number": "CH100081",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 82,
+  "fields": {
+    "make": "Ford",
+    "model": "EcoSport",
+    "year": 2020,
+    "chassis_number": "CH100082",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 83,
+  "fields": {
+    "make": "Toyota",
+    "model": "Innova Crysta",
+    "year": 2020,
+    "chassis_number": "CH100083",
+    "vehicle_type": "MUV",
+    "capacity": 8,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 84,
+  "fields": {
+    "make": "Renault",
+    "model": "Triber",
+    "year": 2016,
+    "chassis_number": "CH100084",
+    "vehicle_type": "MUV",
+    "capacity": 8,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 85,
+  "fields": {
+    "make": "Kia",
+    "model": "Sonet",
+    "year": 2016,
+    "chassis_number": "CH100085",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 86,
+  "fields": {
+    "make": "Mahindra",
+    "model": "Scorpio",
+    "year": 2023,
+    "chassis_number": "CH100086",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 87,
+  "fields": {
+    "make": "Ford",
+    "model": "EcoSport",
+    "year": 2017,
+    "chassis_number": "CH100087",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 88,
+  "fields": {
+    "make": "Ford",
+    "model": "EcoSport",
+    "year": 2021,
+    "chassis_number": "CH100088",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 89,
+  "fields": {
+    "make": "Kia",
+    "model": "Seltos",
+    "year": 2016,
+    "chassis_number": "CH100089",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 90,
+  "fields": {
+    "make": "Toyota",
+    "model": "Innova Crysta",
+    "year": 2019,
+    "chassis_number": "CH100090",
+    "vehicle_type": "MUV",
+    "capacity": 8,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 91,
+  "fields": {
+    "make": "Toyota",
+    "model": "Urban Cruiser",
+    "year": 2025,
+    "chassis_number": "CH100091",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 92,
+  "fields": {
+    "make": "Honda",
+    "model": "Amaze",
+    "year": 2022,
+    "chassis_number": "CH100092",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 93,
+  "fields": {
+    "make": "Honda",
+    "model": "WR-V",
+    "year": 2022,
+    "chassis_number": "CH100093",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 94,
+  "fields": {
+    "make": "Mahindra",
+    "model": "Scorpio",
+    "year": 2017,
+    "chassis_number": "CH100094",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 95,
+  "fields": {
+    "make": "Renault",
+    "model": "Kwid",
+    "year": 2019,
+    "chassis_number": "CH100095",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 96,
+  "fields": {
+    "make": "Toyota",
+    "model": "Glanza",
+    "year": 2019,
+    "chassis_number": "CH100096",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 97,
+  "fields": {
+    "make": "Maruti Suzuki",
+    "model": "Alto",
+    "year": 2019,
+    "chassis_number": "CH100097",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 98,
+  "fields": {
+    "make": "Toyota",
+    "model": "Glanza",
+    "year": 2017,
+    "chassis_number": "CH100098",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 99,
+  "fields": {
+    "make": "Toyota",
+    "model": "Urban Cruiser",
+    "year": 2024,
+    "chassis_number": "CH100099",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 100,
+  "fields": {
+    "make": "Hyundai",
+    "model": "i20",
+    "year": 2018,
+    "chassis_number": "CH100100",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 101,
+  "fields": {
+    "make": "Mahindra",
+    "model": "Bolero",
+    "year": 2017,
+    "chassis_number": "CH100101",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 102,
+  "fields": {
+    "make": "Toyota",
+    "model": "Urban Cruiser",
+    "year": 2025,
+    "chassis_number": "CH100102",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 103,
+  "fields": {
+    "make": "Kia",
+    "model": "Carens",
+    "year": 2019,
+    "chassis_number": "CH100103",
+    "vehicle_type": "MUV",
+    "capacity": 8,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 104,
+  "fields": {
+    "make": "Maruti Suzuki",
+    "model": "Alto",
+    "year": 2022,
+    "chassis_number": "CH100104",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 105,
+  "fields": {
+    "make": "Ford",
+    "model": "EcoSport",
+    "year": 2021,
+    "chassis_number": "CH100105",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 106,
+  "fields": {
+    "make": "Volkswagen",
+    "model": "Vento",
+    "year": 2017,
+    "chassis_number": "CH100106",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 107,
+  "fields": {
+    "make": "Ford",
+    "model": "Endeavour",
+    "year": 2022,
+    "chassis_number": "CH100107",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 108,
+  "fields": {
+    "make": "Ford",
+    "model": "EcoSport",
+    "year": 2019,
+    "chassis_number": "CH100108",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 109,
+  "fields": {
+    "make": "Honda",
+    "model": "WR-V",
+    "year": 2022,
+    "chassis_number": "CH100109",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 110,
+  "fields": {
+    "make": "Mahindra",
+    "model": "XUV700",
+    "year": 2019,
+    "chassis_number": "CH100110",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 111,
+  "fields": {
+    "make": "Volkswagen",
+    "model": "Taigun",
+    "year": 2021,
+    "chassis_number": "CH100111",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 112,
+  "fields": {
+    "make": "Tata",
+    "model": "Tiago",
+    "year": 2023,
+    "chassis_number": "CH100112",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 113,
+  "fields": {
+    "make": "Hyundai",
+    "model": "i20",
+    "year": 2024,
+    "chassis_number": "CH100113",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Under Maintenance"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 114,
+  "fields": {
+    "make": "Toyota",
+    "model": "Fortuner",
+    "year": 2019,
+    "chassis_number": "CH100114",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 115,
+  "fields": {
+    "make": "Tata",
+    "model": "Harrier",
+    "year": 2016,
+    "chassis_number": "CH100115",
+    "vehicle_type": "SUV",
+    "capacity": 7,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 116,
+  "fields": {
+    "make": "Volkswagen",
+    "model": "Polo",
+    "year": 2023,
+    "chassis_number": "CH100116",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 117,
+  "fields": {
+    "make": "Volkswagen",
+    "model": "Polo",
+    "year": 2022,
+    "chassis_number": "CH100117",
+    "vehicle_type": "Hatchback",
+    "capacity": 5,
+    "status": "Booked"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 118,
+  "fields": {
+    "make": "Kia",
+    "model": "Seltos",
+    "year": 2018,
+    "chassis_number": "CH100118",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 119,
+  "fields": {
+    "make": "Hyundai",
+    "model": "Verna",
+    "year": 2019,
+    "chassis_number": "CH100119",
+    "vehicle_type": "Sedan",
+    "capacity": 5,
+    "status": "Available"
+  }
+},
+{
+  "model": "api.vehicle",
+  "pk": 120,
+  "fields": {
+    "make": "Ford",
+    "model": "Endeavour",
+    "year": 2016,
+    "chassis_number": "CH100120",
+    "vehicle_type": "SUV",
+    "capacity": 5,
+    "status": "Available"
+  }
+}
+]
