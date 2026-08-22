@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User, Vehicle, Booking
+from .permissions import IsAdminOrCallCenter
 from .serializers import (
     UserSerializer,
     VehicleSerializer,
@@ -52,7 +53,7 @@ class RegisterView(APIView):
 class VehicleViewSet(viewsets.ModelViewSet):
     queryset = Vehicle.objects.all().order_by('id')
     serializer_class = VehicleSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrCallCenter]
 
     @action(detail=False, methods=['get'])
     def available(self, request):
