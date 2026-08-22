@@ -20,4 +20,5 @@ class Booking(models.Model):
     pickup_location = models.CharField(max_length=255)
     drop_location = models.CharField(max_length=255)
     date = models.DateField()
+    time = models.TimeField(null=True, blank=True)
     status = models.CharField(max_length=20, default='Pending')
