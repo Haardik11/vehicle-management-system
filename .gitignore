@@ -40,3 +40,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Python / Django
+__pycache__/
+*.pyc
+venv/
+*.sqlite3-journal
