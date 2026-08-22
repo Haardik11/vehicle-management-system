@@ -6,20 +6,35 @@ import { VehicleListComponent } from './pages/vehicle-list/vehicle-list.componen
 import { BookingsComponent } from './pages/bookings/bookings.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { CallcenterDashboardComponent } from './pages/call-center-dashboard/call-center-dashboard.component';
-
-
 import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.component';
+import { AuthGuard } from './guards/auth.guard';
+import { RoleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
 
-  { path: 'admin-dashboard', component: AdminDashboardComponent },
-  { path: 'callcenter-dashboard', component: CallcenterDashboardComponent },
-  { path: 'user-dashboard', component: UserDashboardComponent },
+  {
+    path: 'admin-dashboard',
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['admin'] }
+  },
+  {
+    path: 'callcenter-dashboard',
+    component: CallcenterDashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['admin', 'call_center'] }
+  },
+  {
+    path: 'user-dashboard',
+    component: UserDashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['normal'] }
+  },
 
-  { path: 'vehicles', component: VehicleListComponent },
-  { path: 'bookings', component: BookingsComponent }
+  { path: 'vehicles', component: VehicleListComponent, canActivate: [AuthGuard] },
+  { path: 'bookings', component: BookingsComponent, canActivate: [AuthGuard] }
 ];

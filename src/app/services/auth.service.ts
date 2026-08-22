@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -7,6 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   private readonly apiUrl = 'http://127.0.0.1:8000/api';
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   constructor(private http: HttpClient) {}
 
@@ -15,6 +17,7 @@ export class AuthService {
   }
 
   saveToken(token: string) {
+    if (!this.isBrowser) return;
     localStorage.setItem('auth_token', token);
 
     // Decode token to get role
@@ -24,14 +27,15 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('auth_token');
+    return this.isBrowser ? localStorage.getItem('auth_token') : null;
   }
 
   getUserRole(): string | null {
-    return localStorage.getItem('user_role');
+    return this.isBrowser ? localStorage.getItem('user_role') : null;
   }
 
   logout() {
+    if (!this.isBrowser) return;
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_role');
   }

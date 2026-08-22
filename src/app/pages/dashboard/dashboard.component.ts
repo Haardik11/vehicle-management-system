@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
     if (role === 'admin') {
       this.router.navigate(['/admin-dashboard']);
     } else if (role === 'call_center') {
-      this.router.navigate(['/call-center-dashboard']);
+      this.router.navigate(['/callcenter-dashboard']);
     } else {
       this.router.navigate(['/user-dashboard']);
     }
