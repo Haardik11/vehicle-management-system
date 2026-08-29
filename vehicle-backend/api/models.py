@@ -5,6 +5,14 @@ class User(AbstractUser):
     ROLE_CHOICES = [('admin', 'Admin'), ('call_center', 'Call Center'), ('normal', 'Normal')]
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='normal')
 
+    def save(self, *args, **kwargs):
+        # superusers (e.g. via createsuperuser) should always carry the
+        # app-level admin role too, otherwise they get blocked by the
+        # role-based permission checks despite having full Django access
+        if self.is_superuser and self.role != 'admin':
+            self.role = 'admin'
+        super().save(*args, **kwargs)
+
 class Vehicle(models.Model):
     make = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
