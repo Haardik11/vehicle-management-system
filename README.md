@@ -1,96 +1,98 @@
 # Vehicle Management System
 
-This is a full-stack **Vehicle Management System** consisting of a frontend and backend application.  
-The project provides a simple UI to manage vehicle data and perform common operations related to fleet management.
+A full-stack app for managing a small vehicle fleet — tracking vehicles, handling bookings, and giving different levels of access depending on who's logged in (admin, call-center staff, or a regular user).
 
----
+Angular on the frontend, Django REST Framework on the backend, talking to each other over a JWT-secured REST API.
 
-## 🧠 Overview
+## What it does
 
-This application allows users to:
+- Admins and call-center staff can add, edit, and remove vehicles from the fleet
+- Any logged-in user can browse available vehicles and book one for a date and time
+- Call-center staff and admins can see and manage bookings across all users; regular users only see their own
+- Role is baked into the JWT on login, and enforced on both ends — the API rejects unauthorized writes, and the Angular routes redirect anyone who doesn't have the right role
 
-- View and manage a list of vehicles
-- Add, edit, and delete vehicle records
-- Search and filter vehicles
-- Build and run using a modern web stack
+## Tech stack
 
----
+**Frontend** — Angular 19 (standalone components, lazy-loaded routes), TypeScript, Tailwind CSS, PrimeNG, FullCalendar
 
-## 🛠 Tech Stack
+**Backend** — Django 6 + Django REST Framework, SimpleJWT for authentication, django-cors-headers, django-filter
 
-**Frontend:**  
-✔ Angular (TypeScript)  
-✔ Tailwind CSS  
-✔ Responsive UI components
+**Database** — SQLite. Fine for a project this size; would move to Postgres before deploying anywhere real.
 
-**Backend:**  
-✔ (Assuming based on folder) REST API backend  
-✔ Project structure ready for server logic
+## Project structure
 
-**Tooling / Config:**  
-✔ Angular CLI (v19.2.15)  
-✔ Node.js / npm  
-✔ GitHub version control
-
----
-## 📁 Project Structure
-
-vehicle-management/
-├── public/
-├── src/
-│   └── app/                # Angular modules & components
-├── vehicle-frontend/       # Frontend Angular application
-├── vehicle-backend/        # Backend API application
+```
+vehicle-management-system/
+├── src/app/
+│   ├── pages/            # login, register, and the three role-based dashboards
+│   ├── guards/            # route guards for auth + role checks
+│   └── services/           # auth service, JWT interceptor
+├── vehicle-backend/
+│   ├── api/                 # models, views, permissions, serializers, tests
+│   │   └── fixtures/          # sample vehicle data for seeding a fresh DB
+│   ├── scripts/               # functional smoke test against a live server
+│   └── core/                  # Django project settings
 ├── angular.json
-├── package.json
-├── tailwind.config.js
-└── README.md
+└── package.json
+```
 
+## Running it locally
 
+You'll need Node.js and Python 3.
 
----
+**Backend**
 
-## 🚀 How to Run
+```bash
+cd vehicle-backend
+python -m venv venv
+venv\Scripts\activate          # macOS/Linux: source venv/bin/activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py loaddata api/fixtures/vehicles.json   # optional: seeds ~120 sample vehicles
+python manage.py createsuperuser                         # gets the admin role automatically
+python manage.py runserver
+```
 
-1. Clone the repository:  
-   `git clone https://github.com/yourusername/vehicle-management-system.git`
+**Frontend**
 
-2. Install frontend dependencies:  
-   `cd vehicle-frontend && npm install`
+```bash
+npm install
+npm start
+```
 
-3. Start Angular dev server:  
-   `ng serve`
+The frontend runs at `http://localhost:4200` and calls the API at `http://127.0.0.1:8000/api/`.
 
-4. Open in browser:  
-   `http://localhost:4200`
+## Roles
 
-5. Setup backend:  
-   `cd vehicle-backend` and install/run backend server (update this section with your server commands)
+- **admin** — full access: manage vehicles, view and manage all bookings
+- **call_center** — can manage vehicles and handle bookings on behalf of customers
+- **normal** — the default role for anyone who signs up through the app; can browse vehicles and manage their own bookings
 
----
+Signing up through the app always creates a `normal` account. Admin and call-center accounts are set up directly, either with `createsuperuser` or through the Django admin at `/admin/`.
 
-## 📌 Features to Add (future)
+## Testing
 
-✔ Vehicle CRUD  
-✔ Search & filter  
-✔ Authentication  
-✔ REST API improvements  
-✔ Deployment scripts
+The backend has an automated test suite covering authentication, role permissions, and booking visibility:
 
----
+```bash
+cd vehicle-backend
+python manage.py test api
+```
 
-## 🤝 Contribution
+There's also a functional smoke test that hits a running server directly and checks real request/response behavior — registration, login, RBAC-restricted vehicle CRUD, and booking flows:
 
-Contributions are welcome!  
-Please open an issue or submit a pull request.
+```bash
+python manage.py runserver                    # in one terminal
+python scripts/functional_smoke_test.py       # in another
+```
 
----
+## Known limitations
 
-## 👤 Author
+- CORS is wide open (`CORS_ALLOW_ALL_ORIGINS`) for local development — tighten this before deploying anywhere public.
+- The SQLite database file isn't committed (it holds real password hashes); use the fixture above to get sample vehicle data on a fresh clone instead.
+- No CI pipeline yet — tests are run manually.
 
-**Haardik Mago**  
-- GitHub: [Haardik11](https://github.com/Haardik11)  
-- LinkedIn: [*(HAARDIK MAGO)* ](https://www.linkedin.com/in/haardik-mago-637972157?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B6A3VFxy%2FTVK8bJf4%2BPNeLw%3D%3D) 
-- Email: Haardikmago@gmail.com 
+## Author
 
-
+**Haardik Mago**
+[GitHub](https://github.com/Haardik11) · [LinkedIn](https://www.linkedin.com/in/haardik-mago-637972157)
