@@ -35,16 +35,5 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/user-dashboard/user-dashboard.component').then(m => m.UserDashboardComponent),
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['normal'] }
-  },
-
-  {
-    path: 'vehicles',
-    loadComponent: () => import('./pages/vehicle-list/vehicle-list.component').then(m => m.VehicleListComponent),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'bookings',
-    loadComponent: () => import('./pages/bookings/bookings.component').then(m => m.BookingsComponent),
-    canActivate: [AuthGuard]
   }
 ];
