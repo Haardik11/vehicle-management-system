@@ -144,3 +144,42 @@ class BookingVisibilityTests(TestCase):
         }, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data['user'], self.bob.id)
+
+
+class UnauthorizedAccessTests(TestCase):
+    """Every non-public endpoint must reject requests with no token at all."""
+
+    def setUp(self):
+        self.client = APIClient()
+
+    def test_bookings_list_requires_authentication(self):
+        response = self.client.get('/api/bookings/')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_bookings_create_requires_authentication(self):
+        response = self.client.post('/api/bookings/', {
+            'vehicle': 1, 'pickup_location': 'A', 'drop_location': 'B', 'date': '2026-09-01'
+        }, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_users_list_requires_authentication(self):
+        response = self.client.get('/api/users/')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_users_detail_requires_authentication(self):
+        user = User.objects.create_user(username='someone', password='pw12345!', role='normal')
+        response = self.client.get(f'/api/users/{user.id}/')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_vehicle_create_requires_authentication(self):
+        response = self.client.post('/api/vehicles/', {
+            'make': 'X', 'model': 'Y', 'year': 2024, 'chassis_number': 'UNAUTHCH1',
+            'vehicle_type': 'Sedan', 'capacity': 5
+        }, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_vehicle_delete_requires_authentication(self):
+        vehicle = Vehicle.objects.create(make='X', model='Y', year=2024,
+                                          chassis_number='UNAUTHCH2', vehicle_type='Sedan', capacity=5)
+        response = self.client.delete(f'/api/vehicles/{vehicle.id}/')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
