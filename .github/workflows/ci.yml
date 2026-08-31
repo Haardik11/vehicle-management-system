@@ -30,6 +30,17 @@ jobs:
       - name: Run tests
         run: python manage.py test api
 
+      - name: Start server for functional tests
+        run: |
+          python manage.py runserver 0.0.0.0:8000 &
+          for i in $(seq 1 30); do
+            curl -sf http://127.0.0.1:8000/api/ && break
+            sleep 1
+          done
+
+      - name: Run functional smoke test
+        run: python scripts/functional_smoke_test.py
+
   frontend:
     name: Frontend build & tests
     runs-on: ubuntu-latest
