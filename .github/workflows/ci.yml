@@ -22,13 +22,16 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt coverage
 
       - name: Run migrations
         run: python manage.py migrate --noinput
 
       - name: Run tests
-        run: python manage.py test api
+        run: coverage run --source=api manage.py test api
+
+      - name: Coverage report
+        run: coverage report
 
       - name: Start server for functional tests
         run: |
