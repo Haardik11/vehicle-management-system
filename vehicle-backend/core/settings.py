@@ -1,15 +1,23 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-br2%pcf2hbhb+o_z&h%7yc**+wavel7%4t+x*h2^z_eg(bo6w2'
+# Falls back to a local-dev-only key so `manage.py runserver` works out of
+# the box; any real deployment MUST set DJANGO_SECRET_KEY itself. The old
+# key that used to be hardcoded here was committed to a public repo and is
+# considered permanently compromised -- never reuse it anywhere.
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    's*6lrn9@_k+971lm!i1ql6u@0(n5l)_z2c_7&oq0!$vrhwqwf-'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 # Application definition
 INSTALLED_APPS = [
@@ -105,16 +113,18 @@ STATIC_URL = 'static/'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS (dev)
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:4200',
-    'http://127.0.0.1:4200',
-]
+# CORS
+CORS_ALLOWED_ORIGINS = os.environ.get(
+    'CORS_ALLOWED_ORIGINS',
+    'http://localhost:4200,http://127.0.0.1:4200'
+).split(',')
 CORS_ALLOW_CREDENTIALS = True
 
-# CSRF (dev) – for when you use session/CSRf-protected views. JWT-only APIs can ignore.
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:4200',
-    'http://127.0.0.1:4200',
-]
-CORS_ALLOW_ALL_ORIGINS = True
+# CSRF – for when you use session/CSRF-protected views. JWT-only APIs can ignore.
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+
+# Only wide-open with credentials during local dev (DEBUG=True). A real
+# deployment (DEBUG=False) must rely on the explicit CORS_ALLOWED_ORIGINS
+# list above instead -- combining allow-all origins with credentials is
+# a real cross-site request risk once this is reachable by the public.
+CORS_ALLOW_ALL_ORIGINS = DEBUG

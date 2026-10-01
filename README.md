@@ -86,11 +86,14 @@ python manage.py runserver                    # in one terminal
 python scripts/functional_smoke_test.py       # in another
 ```
 
+## Configuration
+
+`SECRET_KEY`, `DEBUG`, `ALLOWED_HOSTS`, and `CORS_ALLOWED_ORIGINS` all read from environment variables (`DJANGO_SECRET_KEY`, `DJANGO_DEBUG`, `DJANGO_ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS`), with safe local-dev defaults so nothing needs to be set to just run it locally. A real deployment should set all four explicitly — in particular `DJANGO_DEBUG=False`, since CORS only stays wide-open while `DEBUG` is true; with it off, only the explicit `CORS_ALLOWED_ORIGINS` list is honored.
+
 ## Known limitations
 
-- CORS is wide open (`CORS_ALLOW_ALL_ORIGINS`) for local development — tighten this before deploying anywhere public.
 - The SQLite database file isn't committed (it holds real password hashes); use the fixture above to get sample vehicle data on a fresh clone instead.
-- No CI pipeline yet — tests are run manually.
+- CI runs tests on every push (see badge/workflow below), but there's no CD yet — deployment is still manual.
 
 ## Author
 
