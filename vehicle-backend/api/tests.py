@@ -183,3 +183,41 @@ class UnauthorizedAccessTests(TestCase):
                                           chassis_number='UNAUTHCH2', vehicle_type='Sedan', capacity=5)
         response = self.client.delete(f'/api/vehicles/{vehicle.id}/')
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class UserObjectPermissionTests(TestCase):
+    """A non-admin user must never be able to read or write another user's account."""
+
+    def setUp(self):
+        self.client = APIClient()
+        self.alice = User.objects.create_user(username='alice_u', password='pw12345!', role='normal')
+        self.bob = User.objects.create_user(username='bob_u', password='pw12345!', role='normal')
+        self.admin = User.objects.create_user(username='admin_u', password='pw12345!', role='admin')
+
+    def test_normal_user_cannot_read_another_users_record(self):
+        self.client.force_authenticate(user=self.alice)
+        response = self.client.get(f'/api/users/{self.bob.id}/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_normal_user_cannot_edit_another_users_record(self):
+        self.client.force_authenticate(user=self.alice)
+        response = self.client.patch(f'/api/users/{self.bob.id}/', {'email': 'hijacked@evil.com'}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.bob.refresh_from_db()
+        self.assertNotEqual(self.bob.email, 'hijacked@evil.com')
+
+    def test_normal_user_can_read_and_edit_own_record(self):
+        self.client.force_authenticate(user=self.alice)
+        response = self.client.patch(f'/api/users/{self.alice.id}/', {'email': 'alice@example.com'}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_normal_user_list_only_shows_self(self):
+        self.client.force_authenticate(user=self.alice)
+        response = self.client.get('/api/users/')
+        ids = {u['id'] for u in response.data}
+        self.assertEqual(ids, {self.alice.id})
+
+    def test_admin_can_read_and_edit_any_users_record(self):
+        self.client.force_authenticate(user=self.admin)
+        response = self.client.get(f'/api/users/{self.bob.id}/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

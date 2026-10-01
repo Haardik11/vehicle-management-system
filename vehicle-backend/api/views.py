@@ -27,6 +27,13 @@ class UserViewSet(viewsets.ModelViewSet):
             return [AllowAny()]  # Allow anyone to register
         return [IsAuthenticated()]  # Require auth for other actions
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        user = self.request.user
+        if getattr(user, 'role', None) == 'admin':
+            return qs
+        return qs.filter(id=user.id)
+
     def create(self, request, *args, **kwargs):
         # Force role to 'normal' for new registrations
         request.data['role'] = 'normal'
