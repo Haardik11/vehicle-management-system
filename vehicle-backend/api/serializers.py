@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.password_validation import validate_password as run_password_validators
+from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import User, Vehicle, Booking
 
@@ -11,6 +13,21 @@ class UserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True},
             'role': {'read_only': True}  # Prevent role from being set directly
         }
+
+    def validate_password(self, value):
+        # Apply the validators in AUTH_PASSWORD_VALIDATORS. An unsaved copy of
+        # the user carries the submitted username/email so the similarity
+        # check compares against the values being saved, without touching
+        # the real record if validation fails.
+        candidate = User(
+            username=self.initial_data.get('username', getattr(self.instance, 'username', '')),
+            email=self.initial_data.get('email', getattr(self.instance, 'email', '')),
+        )
+        try:
+            run_password_validators(value, user=candidate)
+        except DjangoValidationError as exc:
+            raise serializers.ValidationError(list(exc.messages))
+        return value
 
     def create(self, validated_data):
         # Force role to 'normal' for all new registrations

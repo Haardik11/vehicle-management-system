@@ -42,11 +42,17 @@ You'll need Node.js and Python 3.
 
 **Backend**
 
+Debug mode is off by default, and the server refuses to start without a secret key unless debug is on. For local development, turn debug on first:
+
 ```bash
 cd vehicle-backend
 python -m venv venv
 venv\Scripts\activate          # macOS/Linux: source venv/bin/activate
 pip install -r requirements.txt
+
+# PowerShell:   $env:DJANGO_DEBUG = "true"
+# macOS/Linux:  export DJANGO_DEBUG=true
+
 python manage.py migrate
 python manage.py loaddata api/fixtures/vehicles.json   # optional: seeds ~120 sample vehicles
 python manage.py createsuperuser                         # gets the admin role automatically
@@ -76,7 +82,7 @@ The backend has an automated test suite covering authentication, role permission
 
 ```bash
 cd vehicle-backend
-python manage.py test api
+python manage.py test api      # with DJANGO_DEBUG=true set, as above
 ```
 
 There's also a functional smoke test that hits a running server directly and checks real request/response behavior — registration, login, RBAC-restricted vehicle CRUD, and booking flows:
@@ -86,9 +92,23 @@ python manage.py runserver                    # in one terminal
 python scripts/functional_smoke_test.py       # in another
 ```
 
+The smoke test logs in more often than the login limit allows (5 per minute), so start the server with higher limits for that run, for example `DJANGO_THROTTLE_TOKEN_RATE=1000/min DJANGO_THROTTLE_REGISTER_RATE=1000/hour`.
+
 ## Configuration
 
-`SECRET_KEY`, `DEBUG`, `ALLOWED_HOSTS`, and `CORS_ALLOWED_ORIGINS` all read from environment variables (`DJANGO_SECRET_KEY`, `DJANGO_DEBUG`, `DJANGO_ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS`), with safe local-dev defaults so nothing needs to be set to just run it locally. A real deployment should set all four explicitly — in particular `DJANGO_DEBUG=False`, since CORS only stays wide-open while `DEBUG` is true; with it off, only the explicit `CORS_ALLOWED_ORIGINS` list is honored.
+All settings that differ between development and production come from environment variables. `vehicle-backend/.env.example` lists them with placeholder values.
+
+| Variable | Default | Notes |
+|---|---|---|
+| `DJANGO_DEBUG` | off | Set to `true` only for local development. |
+| `DJANGO_SECRET_KEY` | none | Required whenever debug is off; the server will not start without it. |
+| `DJANGO_ALLOWED_HOSTS` | `127.0.0.1,localhost` | Comma-separated. |
+| `CORS_ALLOWED_ORIGINS` | `http://localhost:4200,http://127.0.0.1:4200` | Comma-separated. Ignored while debug is on, when all origins are allowed. |
+| `DJANGO_SECURE_SSL_REDIRECT` | on (when debug is off) | Set to `false` if the host already redirects HTTP to HTTPS. |
+| `DJANGO_THROTTLE_TOKEN_RATE` | `5/min` | Login attempts per client address. |
+| `DJANGO_THROTTLE_REGISTER_RATE` | `10/hour` | Registrations per client address. |
+
+With debug off, the app also sends HSTS headers and marks session and CSRF cookies as secure.
 
 ## Known limitations
 

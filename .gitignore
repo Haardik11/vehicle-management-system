@@ -48,3 +48,8 @@ venv/
 *.sqlite3
 *.sqlite3-journal
 .coverage
+
+# Environment files (keep the example template tracked)
+.env
+.env.*
+!.env.example

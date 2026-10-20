@@ -13,6 +13,12 @@ jobs:
     defaults:
       run:
         working-directory: vehicle-backend
+    env:
+      # Throwaway value for CI only; it protects nothing.
+      DJANGO_SECRET_KEY: ci-throwaway-key-not-a-real-secret
+      # Debug stays off so CI runs with production settings, but the
+      # runner only serves plain HTTP, so the HTTPS redirect is disabled.
+      DJANGO_SECURE_SSL_REDIRECT: 'false'
     steps:
       - uses: actions/checkout@v5
 
@@ -34,10 +40,15 @@ jobs:
         run: coverage report
 
       - name: Start server for functional tests
+        env:
+          # The smoke test logs in and registers more often than the
+          # production limits allow within a minute; raise them for this run only.
+          DJANGO_THROTTLE_TOKEN_RATE: 1000/min
+          DJANGO_THROTTLE_REGISTER_RATE: 1000/hour
         run: |
           python manage.py runserver 0.0.0.0:8000 &
           for i in $(seq 1 30); do
-            curl -sf http://127.0.0.1:8000/api/ && break
+            curl -sf http://127.0.0.1:8000/ && break
             sleep 1
           done
 

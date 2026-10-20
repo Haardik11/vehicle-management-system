@@ -1,23 +1,45 @@
 import os
 from pathlib import Path
 
+from django.core.exceptions import ImproperlyConfigured
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# Falls back to a local-dev-only key so `manage.py runserver` works out of
-# the box; any real deployment MUST set DJANGO_SECRET_KEY itself. The old
-# key that used to be hardcoded here was committed to a public repo and is
-# considered permanently compromised -- never reuse it anywhere.
-SECRET_KEY = os.environ.get(
-    'DJANGO_SECRET_KEY',
-    's*6lrn9@_k+971lm!i1ql6u@0(n5l)_z2c_7&oq0!$vrhwqwf-'
-)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+def env_bool(name, default=False):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in ('1', 'true', 'yes', 'on')
+
+
+# Debug is off unless DJANGO_DEBUG is explicitly set to a true value.
+DEBUG = env_bool('DJANGO_DEBUG', default=False)
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    if DEBUG:
+        # Local development only. Never used when DEBUG is off.
+        SECRET_KEY = 'django-insecure-development-only-key-not-for-production'
+    else:
+        raise ImproperlyConfigured(
+            'DJANGO_SECRET_KEY is not set. Set it to a long random value, '
+            'or set DJANGO_DEBUG=true for local development.'
+        )
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+
+# HTTPS hardening, applied whenever debug is off.
+if not DEBUG:
+    # Some hosts terminate HTTPS before the request reaches the app; set
+    # DJANGO_SECURE_SSL_REDIRECT=false there to avoid a redirect loop.
+    SECURE_SSL_REDIRECT = env_bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+    SECURE_HSTS_PRELOAD = False
 
 # Application definition
 INSTALLED_APPS = [
@@ -89,8 +111,17 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
-    # Optional: lock API by default and open specific endpoints if needed
-    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    # Every endpoint requires login unless a view explicitly opts out.
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    # Per-client-address limits for views that set a matching throttle_scope.
+    # The defaults are the production values; the environment variables exist
+    # so automated end-to-end runs can raise them without editing this file.
+    'DEFAULT_THROTTLE_RATES': {
+        'token': os.environ.get('DJANGO_THROTTLE_TOKEN_RATE', '5/min'),
+        'register': os.environ.get('DJANGO_THROTTLE_REGISTER_RATE', '10/hour'),
+    },
 }
 
 # Password validation
